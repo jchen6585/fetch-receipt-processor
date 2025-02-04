@@ -45,6 +45,11 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !utils.ValidateReceipt(receipt) {
+		log.Print("Receipt is invalid")
+		return
+	}
+
 	points := utils.CalculatePoints(receipt)
 
 	id := uuid.New()
@@ -55,7 +60,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
+	if r.Method != "GET" {
 		log.Print("Only GET requests are processed at the /receipts/{id}/points endpoints")
 		return
 	}

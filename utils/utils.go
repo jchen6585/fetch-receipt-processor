@@ -34,9 +34,9 @@ func calculateItems(items []Item) int {
 	points := 0
 	points += (len(items) / 2) * 5
 	for _, item := range items {
-		trimDescription := strings.TrimSpace(item.ShortDescription)
+		trimDescription := strings.TrimSpace(*item.ShortDescription)
 		if len(trimDescription)%3 == 0 {
-			price, _ := strconv.ParseFloat(item.Price, 64)
+			price, _ := strconv.ParseFloat(*item.Price, 64)
 			price *= 0.2
 			points += int(math.Ceil(price))
 		}
@@ -66,9 +66,9 @@ func calculateTime(date, time string) int {
 
 func CalculatePoints(receipt Receipt) int {
 	points := 0
-	points += alphanumericCount(receipt.Retailer)
-	points += calculateTotal(receipt.Total)
+	points += alphanumericCount(*receipt.Retailer)
+	points += calculateTotal(*receipt.Total)
 	points += calculateItems(receipt.Items)
-	points += calculateTime(receipt.PurchaseDate, receipt.PurchaseTime)
+	points += calculateTime(*receipt.PurchaseDate, *receipt.PurchaseTime)
 	return points
 }
